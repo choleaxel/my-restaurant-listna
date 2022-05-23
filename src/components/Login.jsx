@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { Button, Form, Input } from 'antd';
 
 
@@ -13,22 +14,32 @@ const firebaseConfig = {
   storageBucket: "my-first-firestore-na.appspot.com",
   messagingSenderId: "746068966460",
   appId: "1:746068966460:web:1647f9b1b0e18cf97d1739"
-};
+}; //copied from firebase 
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
 
 export default function Login() {
+    const handleLogin = ({ email, password }) => {
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        //login with firebase auth
+        signInWithEmailAndPassword(auth, email, password)
+            .then(res => console.log(res.user))
+            .catch(console.error)
+    }
     return (
         <section style={{ padding: '2em '}}>
     <Form
+        onFinish={handleLogin} //what it does when form is submitted after rules are met
         labelCol={{ span: 8 }}
-        wrapperCol={{span: 16}}
+        wrapperCol={{ span: 16 }}
         >
-        <Form.Item label ='Email' name='email'>
+        <Form.Item label ='Email' name='email'
+            rules={[{ required: true, message: 'Please enter a valid email'}]}>
             <Input/>
         </Form.Item>
-        <Form.Item label ='Password' name='password'>
+        <Form.Item label ='Password' name='password'
+            rules={[{ required: true, message: 'Please enter your password'}]}>
             <Input.Password/>
         </Form.Item>
         <Form.Item
