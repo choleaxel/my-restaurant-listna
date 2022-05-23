@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Card } from "antd";
+import { Row } from "antd";
+import RestaurantCard from "./RestaurantCard";
 
 function RestaurantList() {
   const [restaurants, setRestaurants] = useState();
@@ -11,27 +12,18 @@ function RestaurantList() {
       .catch(console.error);
   }, []);
   return (
-    <section>
-      <Row gutter={16}>
-        {!restaurants ? ( //conditional rendering, showing something while loading
+    <section style={{ marginTop: '60px'}}>
+      <Row>
+        {!restaurants ?  //conditional rendering, showing something while loading
           <h2> Loading...</h2>
-        ) : (
-          restaurants.map(
-            (restaurant) => (
-              <Col style={{ width: "300px" }} key={restaurant.id}>
-                <Card title={restaurant.name} 
-                hoverable>
-                  <p>{restaurant.address}</p>
-                </Card>
-              </Col>
-            )
-
-            // dont forget the key
-          )
-        )}
+         : restaurants.map(restaurant => <RestaurantCard restaurant={restaurant} key={restaurant.id} />)}
       </Row>
     </section>
   );
 }
 
 export default RestaurantList;
+
+//pulling in list of restaurants, adding the components in by importing them from their files
+//line 17-19, waiting on restaurants to be defined (getting); while getting 'loading',
+// is mapping through the list
