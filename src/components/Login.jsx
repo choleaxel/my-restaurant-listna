@@ -1,10 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, 
+    GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { Button, Form, Input } from 'antd';
 
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,17 +12,26 @@ const firebaseConfig = {
   storageBucket: "my-first-firestore-na.appspot.com",
   messagingSenderId: "746068966460",
   appId: "1:746068966460:web:1647f9b1b0e18cf97d1739"
-}; //copied from firebase 
+}; //copied from firebase, even though they are credentials they will only be
+//used here
 
 // Initialize Firebase
 
-export default function Login() {
+export default function Login({setUser}) {
     const handleLogin = ({ email, password }) => {
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         //login with firebase auth
         signInWithEmailAndPassword(auth, email, password)
-            .then(res => console.log(res.user))
+            .then(res => setUser(res.user))
+            .catch(console.error)
+    }
+    const handleGoogleLogin = () => {
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+        .then(res => setUser(res.user))
             .catch(console.error)
     }
     return (
@@ -45,6 +52,10 @@ export default function Login() {
         <Form.Item
             wrapperCol={{span: 16, offset:  8}}>
             <Button type='primary' htmlType='submit'>Login</Button> 
+        </Form.Item>
+        <Form.Item
+            wrapperCol={{span: 16, offset:  8}}>
+            <Button onClick={handleGoogleLogin}>Google Login</Button> 
         </Form.Item>
     </Form>
     </section>

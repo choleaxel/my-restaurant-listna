@@ -1,5 +1,5 @@
 
-
+import { useState } from 'react'; 
 import RestaurantList from './components/RestaurantList';
 import { Layout, Menu } from 'antd';
 import './App.css';
@@ -11,6 +11,7 @@ import Login from './components/Login';
 const { Header, Content } = Layout;
 
 function App() {
+  const [user, setUser] = useState();
   return (
     <BrowserRouter>
       <Layout className='layout'>
@@ -21,8 +22,7 @@ function App() {
           <Routes>
             <Route path='/restaurants/:restaurantId' element={<RestaurantPage />} />          
             <Route path='/random' element={<h1>Random</h1>} />          
-            <Route path='/add' element={<h1>Add Restaurant</h1>} />                   
-            <Route path='/login' element={<Login/>} />          
+            <Route path='/add' element={!user ? <Login setUser={setUser} /> : <h1>Add Restaurant</h1>} />                           
             <Route path='/' element={<RestaurantList/>} />
           </Routes>
         </Content>
