@@ -21,3 +21,5 @@ export default function Menubar () {
         </Menu>
     )
 };
+
+//Menu.Item, Item is a sub-component of the Menu component.
