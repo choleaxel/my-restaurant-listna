@@ -1,7 +1,9 @@
 import { initializeApp } from "firebase/app";
+import { useContext } from "react";
 import { getAuth, signInWithEmailAndPassword, 
     GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { Button, Form, Input } from 'antd';
+import { UserContext } from "../App";
 
 
 // Your web app's Firebase configuration
@@ -17,7 +19,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 
-export default function Login({setUser}) {
+export default function Login() {
+    const { setUser } = useContext(UserContext)
     const handleLogin = ({ email, password }) => {
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
