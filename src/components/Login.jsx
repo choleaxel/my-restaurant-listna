@@ -29,7 +29,7 @@ export default function Login() {
             .then(res => setUser(res.user))
             .catch(console.error)
     }
-    const handleGoogleLogin = () => {
+    const handleGoogleLogin = () => { //using google for logging in
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
