@@ -17,7 +17,7 @@ export default function AddRestaurant() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('https://my-first-firestore-bc.web.app/restaurants', {
+    fetch('https://my-first-firestore-na.web.app/restaurants', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
